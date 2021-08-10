@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+
+        <title>Streaming Platform | Home</title>
+
+        <style>
+            body {
+                background-color: black;
+                color: white;
+                font-family: 'Roboto', sans-serif;
+
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+            }
+
+            li {
+                list-style: none;
+                margin-left: -40px;
+                font-size: 25px;
+            }
+            li a {
+                text-decoration: none;
+                color: aqua;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Streaming Platform | Home</h1>
+
+        <h3>List of streams</h3>
+        <ul>
+          <% for(var i = 0; i < streams.length; i++) { %>
+            <li><a href="<%= streams[i].link %>"><%= streams[i].name %></a></li>
+          <% } %>
+        </ul>
+    </body>
+</html>

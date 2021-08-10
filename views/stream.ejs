@@ -1,0 +1,69 @@
+<html>
+    <head>        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+
+        <title>Streaming Platform | <%= id %></title>
+        <style>
+            * {
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body {
+                background-color: black;
+                color: white;
+                font-family: 'Roboto', sans-serif;
+
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+            }
+
+            video {
+                width: 100vw; 
+                height: 56.25vw; /* height:width ratio = 9/16 = .5625  */
+                background: black;
+                max-height: 100vh;
+                max-width: 177.78vh; /* 16/9 = 1.778 */
+                margin: auto;
+                top:0;bottom:0; /* vertical center */
+                left:0;right:0; /* horizontal center */
+            }
+
+            h1 {
+                margin: 25px;
+            }
+
+            p {
+                margin: 25px;
+            }
+
+            a {
+                text-decoration: none;
+                color: aqua;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Streaming Platform | <%= id %></h1>
+        <script src="https://cdn.bootcss.com/flv.js/1.5.0/flv.min.js"></script>
+        <video id="videoElement" preload="auto" autoplay loop controls></video>
+        <script>
+            if (flvjs.isSupported()) {
+                var videoElement = document.getElementById('videoElement');
+                var flvPlayer = flvjs.createPlayer({
+                    type: 'flv',
+                    url: 'http://localhost:8000/live/<%= id %>.flv'
+                });
+                flvPlayer.attachMediaElement(videoElement);
+                flvPlayer.load();
+                flvPlayer.play();
+            }
+        </script>
+
+
+        <p><a href="/">Click here to back home</a></p>
+    </body>
+</html>
