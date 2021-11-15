@@ -1,7 +1,8 @@
-// Stream Server
-
-const NodeMediaServer = require('node-media-server');
-
+/* ########################## */
+// Config
+/* ########################## */
+let streams = []
+let allowedStreams = ["test"]
 const config = {
   rtmp: {
     port: 1935,
@@ -16,16 +17,23 @@ const config = {
   }
 };
 
+
+/* ########################## */
+// Stream Server
+/* ########################## */
+const NodeMediaServer = require('node-media-server');
 var nms = new NodeMediaServer(config)
 nms.run();
 
-let streams = []
-
-nms.on('postPublish', (id, StreamPath, args) => {
-  streams.push({
-    name: StreamPath.replace('/live/', ''),
-    link: StreamPath.replace('/live/', '/stream/')
-  })
+nms.on('prePublish', (id, StreamPath, args) => {
+  if(allowedStreams.includes(StreamPath.replace('/live/', ''))) {
+    streams.push({
+      name: StreamPath.replace('/live/', ''),
+      link: StreamPath.replace('/live/', '/stream/')
+    })
+  } else {
+    nms.getSession(id).reject()
+  }
 });
 
 nms.on('donePublish', (id, StreamPath, args) => {
@@ -35,8 +43,10 @@ nms.on('donePublish', (id, StreamPath, args) => {
   })
 });
 
-// Web Server
 
+/* ########################## */
+// Web Server
+/* ########################## */
 const express = require('express')
 const app = express()
 
